@@ -20,7 +20,8 @@ func HandleRequest(ctx context.Context, event events.APIGatewayProxyRequest) (ev
 	body := HttpHelper{Success: true}
 	response, err := json.Marshal(body)
 	if err != nil {
-		return events.APIGatewayProxyResponse{StatusCode: 500}, nil
+		errorResponse, _ := json.Marshal(HttpHelper{Success: false})
+		return events.APIGatewayProxyResponse{StatusCode: 500, Body: string(errorResponse)}, nil
 	}
 	return events.APIGatewayProxyResponse{StatusCode: 200, Body: string(response)}, nil
 }
