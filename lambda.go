@@ -18,13 +18,14 @@ type Response struct {
 }
 
 func HandleRequest(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	fmt.Println("Events API GATEWAY", event.Headers)
+	fmt.Println("Headers: ", event.Headers)
 	body := Response{Success: true}
 	response, err := json.Marshal(body)
 	if err != nil {
 		errorResponse, _ := json.Marshal(Response{Success: false})
 		return events.APIGatewayProxyResponse{StatusCode: 500, Body: string(errorResponse)}, nil
 	}
+	fmt.Println("APIGatewayProxyResponse: ", events.APIGatewayProxyResponse{StatusCode: 200, Body: string(response)})
 	return events.APIGatewayProxyResponse{StatusCode: 200, Body: string(response)}, nil
 }
 
